@@ -13,6 +13,8 @@ public class World : MonoBehaviour
 	public Rect worldBounds = new Rect(-10f, -5f, 20f, 10f);
 	public Vector2 gravity = Vector2.down * 9.81f;
 
+    public Vector2 windVelocity = new Vector2(5f, 5f);
+
 	[NonSerialized]
 	public Entities entities;
 
@@ -29,6 +31,7 @@ public class World : MonoBehaviour
 
 		// System addition order matters, they will run in the same order
 		systems.Add(new GravitySystem());
+        systems.Add(new WindSystem());
 		systems.Add(new ForceSystem());
 		systems.Add(new MoveSystem());	
 		systems.Add(new CollisionSystem());
