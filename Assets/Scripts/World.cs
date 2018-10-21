@@ -14,6 +14,7 @@ public class World : MonoBehaviour
 	public Vector2 gravity = Vector2.down * 9.81f;
 
     public Vector2 windVelocity = new Vector2(5f, 5f);
+    public float windResistanceConstant = 5f;
 
 	[NonSerialized]
 	public Entities entities;
