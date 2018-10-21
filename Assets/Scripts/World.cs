@@ -13,8 +13,8 @@ public class World : MonoBehaviour
 	public Rect worldBounds = new Rect(-10f, -5f, 20f, 10f);
 	public Vector2 gravity = Vector2.down * 9.81f;
 
-    public Vector2 windVelocity = new Vector2(5f, 5f);
-    public float windResistanceConstant = 5f;
+    public Vector2 windVelocity = new Vector2(2f, 2f);
+    public float windResistanceConstant = 1f;
 
 	[NonSerialized]
 	public Entities entities;

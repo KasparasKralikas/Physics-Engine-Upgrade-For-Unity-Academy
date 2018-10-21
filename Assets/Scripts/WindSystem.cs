@@ -38,7 +38,8 @@ public class WindSystem : ISystemInterface
 
                 if (forceComponent.massInverse > 1e-6f)
                 {
-                    Debug.Log("I've got called " + collisionComponent.radius);
+                    float objectWindResistanceConstant = world.windResistanceConstant * collisionComponent.radius;
+                    forceComponent.force += objectWindResistanceConstant * (world.windVelocity - moveComponent.velocity);
                 }
 
                 entities.forceComponents[i] = forceComponent;
