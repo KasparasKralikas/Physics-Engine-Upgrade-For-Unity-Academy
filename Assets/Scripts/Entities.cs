@@ -23,7 +23,8 @@ public enum EntityFlags
 	kFlagGravity = 1<<3,
 	kFlagForce = 1<<4,
 	kFlagCollision = 1<<5,
-    kFlagWind = 1<<6
+    kFlagWind = 1<<6,
+    kFlagWater = 1<<7
 }
 
 public struct MoveComponent

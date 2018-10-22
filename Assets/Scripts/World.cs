@@ -14,7 +14,10 @@ public class World : MonoBehaviour
 	public Vector2 gravity = Vector2.down * 9.81f;
 
     public Vector2 windVelocity = new Vector2(2f, 2f);
-    public float windResistanceConstant = 1f;
+    public float windResistanceCoeficient = 1f;
+
+    public float waterLevel = 5f;
+    public float waterDensity = 10f;
 
 	[NonSerialized]
 	public Entities entities;
@@ -33,6 +36,7 @@ public class World : MonoBehaviour
 		// System addition order matters, they will run in the same order
 		systems.Add(new GravitySystem());
         systems.Add(new WindSystem());
+        systems.Add(new WaterSystem());
 		systems.Add(new ForceSystem());
 		systems.Add(new MoveSystem());	
 		systems.Add(new CollisionSystem());

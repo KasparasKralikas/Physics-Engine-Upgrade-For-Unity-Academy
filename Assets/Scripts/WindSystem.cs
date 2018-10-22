@@ -9,7 +9,6 @@ public class WindSystem : ISystemInterface
     {
         var entities = world.entities;
 
-        // add randomized velocity to all entities that have positions
         for (var i = 0; i < entities.flags.Count; i++)
         {
             if (entities.flags[i].HasFlag(EntityFlags.kFlagPosition))
@@ -23,6 +22,8 @@ public class WindSystem : ISystemInterface
     {
         var entities = world.entities;
         var gravity = world.gravity;
+        var windVelocity = world.windVelocity;
+        var windResistanceCoeficient = world.windResistanceCoeficient;
 
         for (var i = 0; i < entities.flags.Count; i++)
         {
@@ -38,8 +39,8 @@ public class WindSystem : ISystemInterface
 
                 if (forceComponent.massInverse > 1e-6f)
                 {
-                    float objectWindResistanceConstant = world.windResistanceConstant * collisionComponent.radius;
-                    forceComponent.force += objectWindResistanceConstant * (world.windVelocity - moveComponent.velocity);
+                    float objectWindResistanceConstant = windResistanceCoeficient * collisionComponent.radius;
+                    forceComponent.force += objectWindResistanceConstant * (windVelocity - moveComponent.velocity);
                 }
 
                 entities.forceComponents[i] = forceComponent;
