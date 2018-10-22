@@ -17,7 +17,6 @@ public class WaterSystem : ISystemInterface
             }
         }
         
-        
     }
 
     public void Update(World world, float time = 0, float deltaTime = 0)
@@ -27,6 +26,40 @@ public class WaterSystem : ISystemInterface
         var waterDensity = world.waterDensity;
         var waterLevel = world.waterLevel;
 
-       // F = waterDensity * V * g
+        
+
+        for (var i = 0; i < entities.flags.Count; i++)
+        {
+            if (entities.flags[i].HasFlag(EntityFlags.kFlagWater) &&
+                entities.flags[i].HasFlag(EntityFlags.kFlagForce))
+            {
+                var forceComponent = entities.forceComponents[i];
+                var moveComponent = entities.moveComponents[i];
+                var collisionComponent = entities.collisionComponents[i];
+                var position = entities.positions[i];
+                float volume = collisionComponent.radius * collisionComponent.radius * Mathf.PI;
+                
+
+                if (forceComponent.massInverse > 1e-6f)
+                {
+                    if (position.y - collisionComponent.radius <= waterLevel)
+                    {
+                        float displacedVolume = volume;
+
+                        if (waterLevel - position.y < collisionComponent.radius)
+                        {
+
+                        }
+
+                        // F = waterDensity * V * -g
+
+                        forceComponent.force += waterDensity * displacedVolume * - gravity;
+                        
+                    }
+                }
+
+                entities.forceComponents[i] = forceComponent;
+            }
+        }
     }
 }
