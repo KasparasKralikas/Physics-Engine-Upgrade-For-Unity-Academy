@@ -227,10 +227,10 @@ MonoBehaviour:
     width: 20
     height: 10
   gravity: {x: 0, y: -9.81}
-  windVelocity: {x: 2, y: 2}
+  windVelocity: {x: 2, y: 0}
   windResistanceCoeficient: 1
   waterLevel: 0
-  waterDensity: 10
+  waterDensity: 1
 --- !u!4 &1187221517
 Transform:
   m_ObjectHideFlags: 0

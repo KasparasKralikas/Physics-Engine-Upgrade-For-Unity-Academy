@@ -5,15 +5,18 @@ using UnityEngine;
 public class RenderingSystem : ISystemInterface
 {
 	private const int BATCH_SIZE = 1000;
-	
+
+    private Material lineMaterial;
+
 	public void Start(World world)
 	{
-		//do nothing
-	}
+        //do nothing
+    }
 
 	public void Update(World world, float time = 0, float deltaTime = 0)
 	{
-		var entities = world.entities;
+
+        var entities = world.entities;
 		Mesh mesh = world.templateObject.GetComponent<MeshFilter>().sharedMesh;
 		Material material = world.templateObject.GetComponent<Renderer>().sharedMaterial;
 	

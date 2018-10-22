@@ -19,14 +19,30 @@ public class WaterSystem : ISystemInterface
 
     }
 
+    private void DrawLine(Vector3 start, Vector3 end, Color color, float duration)
+    {
+        GameObject myLine = new GameObject();
+        myLine.transform.position = start;
+        myLine.AddComponent<LineRenderer>();
+        LineRenderer lr = myLine.GetComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        lr.startColor = color;
+        lr.endColor = color;
+        lr.startWidth = 0.1f;
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
+        GameObject.Destroy(myLine, duration);
+    }
+
     public void Update(World world, float time = 0, float deltaTime = 0)
     {
         var entities = world.entities;
         var gravity = world.gravity;
         var waterDensity = world.waterDensity;
         var waterLevel = world.waterLevel;
-
-        Debug.DrawLine(new Vector3(-20f, waterLevel), new Vector3(20f, waterLevel));
+        
+        // draw the water level - not an effective solution
+        DrawLine(new Vector3(world.worldBounds.xMin, waterLevel), new Vector3(world.worldBounds.xMax, waterLevel), Color.blue, deltaTime * 2f);
 
         for (var i = 0; i < entities.flags.Count; i++)
         {
