@@ -16,7 +16,7 @@ public class WaterSystem : ISystemInterface
                 entities.AddComponent(new Entity(i), EntityFlags.kFlagWater);
             }
         }
-        
+
     }
 
     public void Update(World world, float time = 0, float deltaTime = 0)
@@ -26,7 +26,7 @@ public class WaterSystem : ISystemInterface
         var waterDensity = world.waterDensity;
         var waterLevel = world.waterLevel;
 
-        
+        Debug.DrawLine(new Vector3(-20f, waterLevel), new Vector3(20f, waterLevel));
 
         for (var i = 0; i < entities.flags.Count; i++)
         {
@@ -37,24 +37,29 @@ public class WaterSystem : ISystemInterface
                 var moveComponent = entities.moveComponents[i];
                 var collisionComponent = entities.collisionComponents[i];
                 var position = entities.positions[i];
-                float volume = collisionComponent.radius * collisionComponent.radius * Mathf.PI;
+                float radius = collisionComponent.radius;
+                float volume = radius * radius * Mathf.PI;
+                
                 
 
                 if (forceComponent.massInverse > 1e-6f)
                 {
-                    if (position.y - collisionComponent.radius <= waterLevel)
+                    if (position.y - radius <= waterLevel)
                     {
                         float displacedVolume = volume;
 
-                        if (waterLevel - position.y < collisionComponent.radius)
-                        {
+                        // if body is not fully submerged, calculate the submerged volume
 
+                        if (Mathf.Abs(waterLevel - position.y) < radius)
+                        {
+                            float depth = waterLevel - position.y + radius;
+                            displacedVolume = (radius * radius / Mathf.Cos((radius - depth) / radius)) - (radius - depth) * Mathf.Sqrt(2 * radius * depth - depth * depth); 
                         }
 
                         // F = waterDensity * V * -g
 
                         forceComponent.force += waterDensity * displacedVolume * - gravity;
-                        
+                         
                     }
                 }
 

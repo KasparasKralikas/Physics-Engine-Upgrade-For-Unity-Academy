@@ -33,13 +33,14 @@ public class WindSystem : ISystemInterface
                 var forceComponent = entities.forceComponents[i];
                 var moveComponent = entities.moveComponents[i];
                 var collisionComponent = entities.collisionComponents[i];
+                var radius = collisionComponent.radius;
 
                 // F = c * (vWind - vObject)
                 // c = k * R
 
                 if (forceComponent.massInverse > 1e-6f)
                 {
-                    float objectWindResistanceConstant = windResistanceCoeficient * collisionComponent.radius;
+                    float objectWindResistanceConstant = windResistanceCoeficient * radius;
                     forceComponent.force += objectWindResistanceConstant * (windVelocity - moveComponent.velocity);
                 }
 
